@@ -1,2 +1,5 @@
 fastapi
 uvicorn
+httpx
+jinja2
+aiofiles # async library to work with files
