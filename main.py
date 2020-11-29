@@ -4,11 +4,22 @@ import uvicorn
 
 api = fastapi.FastAPI()
 
+@api.get('/')
+def index():
+    body = "<html>" \
+        "<body style='padding: 10px;'>" \
+        "<h1>Welcome to the API</h1>" \
+        "<div>" \
+        "Try it: <a href='/api/calculate?x=7&y=11'>/api/calculate?x=7&y=11</a>" \
+        "</div>" \
+        "</body>" \
+        "</html>"
+    return fastapi.responses.HTMLResponse(content=body)
+
 @api.get('/api/calculate')
 def calculate(x:int, y:int ,z:Optional[int]=None):
     if z == 0:
-        return fastapi.Response(content='{"error":"Error: Z cannot be 0"}',
-                                 media_type="application/json",
+        return fastapi.responses.JSONResponse(content={"error":"Error: Z cannot be 0"},
                                  status_code=400)
     value = x + y
     if z is not None:
